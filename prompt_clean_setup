@@ -1,0 +1,168 @@
+#
+# A two-line, Powerline-inspired theme that displays node and git information.
+#
+# This theme requires a Nerd font to display certain symbols, get them from
+# https://github.com/ryanoasis/nerd-fonts.
+#
+
+PRIMARY_FG=black
+CURRENT_BG='NONE'
+
+# Load dependencies.
+pmodload 'helper'
+
+# Define variables.
+_prompt_clean_current_bg='NONE'
+_prompt_clean_segment_separator=''
+_prompt_clean_start_time=$SECONDS
+
+# Define base prompt symbol by checking for os type
+case "$OSTYPE" in
+  darwin*)  _prompt_clean_base_prompt_symbol='' ;; 
+  linux*)   _prompt_clean_base_prompt_symbol='' ;;
+  msys*)    _prompt_clean_base_prompt_symbol='' ;;
+  cygwin*)  _prompt_clean_base_prompt_symbol='' ;;
+  *)        _prompt_clean_base_prompt_symbol='' ;;
+esac
+
+function prompt_clean_start_segment {
+  local bg fg
+  [[ -n "$1" ]] && bg="%K{$1}" || bg="%k"
+  [[ -n "$2" ]] && fg="%F{$2}" || fg="%f"
+  if [[ "$_prompt_clean_current_bg" != 'NONE' && "$1" != "$_prompt_clean_current_bg" ]]; then
+    print -n " $bg%F{$_prompt_clean_current_bg}$_prompt_clean_segment_separator$fg "
+  else
+    print -n "$bg$fg "
+  fi
+  _prompt_clean_current_bg="$1"
+  [[ -n "$3" ]] && print -n "$3"
+}
+
+function prompt_clean_end_segment {
+  if [[ -n "$_prompt_clean_current_bg" ]]; then
+    print -n " %k%F{$_prompt_clean_current_bg}$_prompt_clean_segment_separator"
+  else
+    print -n "%k"
+  fi
+  print -n "%f"
+  _prompt_clean_current_bg=''
+}
+
+function prompt_clean_nvm {
+  if [[ $(type nvm) =~ 'nvm is a shell function' ]]; then
+    prompt_clean_start_segment $1 $2 " $(nvm current)"
+  fi
+}
+
+function prompt_clean_git_branch {
+  [[ -n "$git_info" ]] && prompt_clean_start_segment $1 $2 '${(e)git_info[ref]}'
+}
+
+function prompt_clean_git_status {
+  [[ -n "$git_info[dirty]" ]] && prompt_clean_start_segment $1 $2 '${(e)git_info[dirty]}'
+  [[ -n "$git_info[behind]" ]] && prompt_clean_start_segment $1 $2 '${(e)git_info[behind]}'
+  [[ -n "$git_info[ahead]" ]] && prompt_clean_start_segment $1 $2 '${(e)git_info[ahead]}'
+}
+
+function prompt_clean_build_prompt {
+  prompt_clean_start_segment black default '%(?::%F{red}✘ )%(!:%F{yellow}⚡ :)%(1j:%F{cyan}⚙ :)%F{white}${_prompt_clean_base_prompt_symbol}'
+  
+  prompt_clean_start_segment blue black '$_prompt_clean_pwd'
+
+  prompt_clean_nvm green white
+
+  prompt_clean_git_branch cyan white
+
+  prompt_clean_git_status black white
+
+  prompt_clean_end_segment
+}
+
+function prompt_clean_pwd {
+  local pwd="${PWD/#$HOME/~}"
+
+  if [[ "$pwd" == (#m)[/~] ]]; then
+    _prompt_clean_pwd="$MATCH"
+    unset MATCH
+  else
+    _prompt_clean_pwd="${${${${(@j:/:M)${(@s:/:)pwd}##.#?}:h}%/}//\%/%%}/${${pwd:t}//\%/%%}"
+  fi
+}
+
+function prompt_clean_print_elapsed_time {
+  local end_time=$(( SECONDS - _prompt_clean_start_time ))
+  local hours minutes seconds remainder
+
+  if (( end_time >= 3600 )); then
+    hours=$(( end_time / 3600 ))
+    remainder=$(( end_time % 3600 ))
+    minutes=$(( remainder / 60 ))
+    seconds=$(( remainder % 60 ))
+    print -P "%B%F{red}>>> elapsed time ${hours}h${minutes}m${seconds}s%b"
+  elif (( end_time >= 60 )); then
+    minutes=$(( end_time / 60 ))
+    seconds=$(( end_time % 60 ))
+    print -P "%B%F{yellow}>>> elapsed time ${minutes}m${seconds}s%b"
+  elif (( end_time > 10 )); then
+    print -P "%B%F{green}>>> elapsed time ${end_time}s%b"
+  fi
+}
+
+function prompt_clean_precmd {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+
+  # Format PWD.
+  prompt_clean_pwd
+
+  # Get Git repository information.
+  if (( $+functions[git-info] )); then
+    git-info
+  fi
+
+  # Calculate and print the elapsed time.
+  prompt_clean_print_elapsed_time
+}
+
+function prompt_clean_preexec {
+  _prompt_clean_start_time="$SECONDS"
+}
+
+function prompt_clean_setup {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+  prompt_opts=(cr percent subst)
+
+  # Load required functions.
+  autoload -Uz add-zsh-hook
+
+  # Add hook for calling git-info before each command.
+  add-zsh-hook preexec prompt_clean_preexec
+  add-zsh-hook precmd prompt_clean_precmd
+
+  # Set editor-info parameters.
+  zstyle ':prezto:module:editor:info:completing' format '%B%F{red}...%f%b'
+  zstyle ':prezto:module:editor:info:keymap:primary' format '%B%F{blue}❯%f%b'
+  zstyle ':prezto:module:editor:info:keymap:primary:overwrite' format '%F{red}♺%f'
+  zstyle ':prezto:module:editor:info:keymap:alternate' format '%B%F{red}❮%f%b'
+
+  # Set git-info parameters.
+  zstyle ':prezto:module:git:info' verbose 'yes'
+  zstyle ':prezto:module:git:info:ahead' format '%F{blue}↑%F{white}%A'
+  zstyle ':prezto:module:git:info:behind' format '%F{blue}↓%F{white}%B'
+  zstyle ':prezto:module:git:info:branch' format '⑂ %b'
+  zstyle ':prezto:module:git:info:dirty' format '%F{blue}▵%F{white}%D'
+  zstyle ':prezto:module:git:info:keys' format \
+    'ref' '$(coalesce "%b" "%p" "%c")' \
+    'dirty' '%D' \
+    'ahead' '%A' \
+    'behind' '%B'
+
+  # Define prompts.
+  PROMPT='
+${(e)$(prompt_clean_build_prompt)}
+ ${editor_info[keymap]} '
+  SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+}
+
+prompt_clean_setup "$@"
