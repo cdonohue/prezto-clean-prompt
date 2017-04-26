@@ -16,7 +16,7 @@ This prompt takes advantage of symbols provided with [Nerd fonts](https://github
 It looks best with a duotone color scheme. I've included an `iTerm` theme in the repo to make things easier on setting ANSI colors. If you use another terminal app, I'll list out the colors used in the above `iTerm` color theme.
 
 - [iTerm](https://www.iterm2.com/)
-- [Duotone iTerm color theme]()
+- [Duotone iTerm color theme](https://github.com/cdonohue/prezto-clean-prompt/blob/master/Duotone%20Dark%20Space.itermcolors)
 
 ## Installation
 >Clone to your external prezto prompts
@@ -55,3 +55,5 @@ ln -s ~/.zprezto/modules/prompt/external/clean/prompt_clean_setup ~/.zprezto/mod
 | BrightCyan  | `#bdebe4`  |
 | BrightWhite  |  `#f2f2f2` |
 
+## License
+> MIT License 2017 © Chad Donohue
