@@ -2,6 +2,8 @@
 
 A two line prezto prompt that tells you what `nvm` `node` version your using and, when available, `git` information about the repo that you are currently working with.
 
+![Clean prompt](https://github.com/cdonohue/prezto-clean-prompt/blob/master/screenshots/prompt.png)
+
 ## Features
 - NodeJS version
 - Git branch
