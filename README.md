@@ -19,21 +19,23 @@ It looks best with a duotone color scheme. I've included an `iTerm` theme in the
 - [Duotone iTerm color theme](https://github.com/cdonohue/prezto-clean-prompt/blob/master/Duotone%20Dark%20Space.itermcolors)
 
 ## Installation
->Clone to your external prezto prompts
+1. Update your color theme. You can use the provided [iTerm color theme](https://github.com/cdonohue/prezto-clean-prompt/releases/download/1.0.0/Duotone.Dark.Space.itermcolors) or modify your terminal with the ANSI colors below
+
+2. Clone to your external prezto prompts
 ```shell
 git clone https://github.com/cdonohue/prezto-clean-prompt.git ~/.zprezto/modules/prompt/external/clean
 ```
 
->Link the prompt
+3. Link the prompt
 ```shell
 ln -s ~/.zprezto/modules/prompt/external/clean/prompt_clean_setup ~/.zprezto/modules/prompt/functions
 ```
 
->Verify that you have the `git` module loading in your `.zpreztorc` file
+4. Verify that you have the `git` module loading in your `.zpreztorc` file
 
 ![zpreztorc-git](https://github.com/cdonohue/prezto-clean-prompt/blob/master/screenshots/zpreztorc-git.png)
 
->Update your `.zpreztorc` to use the `clean` prompt
+5. Update your `.zpreztorc` to use the `clean` prompt
 
 ![zpreztorc-prompt](https://github.com/cdonohue/prezto-clean-prompt/blob/master/screenshots/zpreztorc-prompt.png)
 
