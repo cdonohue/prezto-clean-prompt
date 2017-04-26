@@ -29,7 +29,13 @@ git clone https://github.com/cdonohue/prezto-clean-prompt.git ~/.zprezto/modules
 ln -s ~/.zprezto/modules/prompt/external/clean/prompt_clean_setup ~/.zprezto/modules/prompt/functions
 ```
 
+>Verify that you have the `git` module loading in your `.zpreztorc` file
+
+![zpreztorc-git](https://github.com/cdonohue/prezto-clean-prompt/blob/master/screenshots/zpreztorc-git.png)
+
 >Update your `.zpreztorc` to use the `clean` prompt
+
+![zpreztorc-prompt](https://github.com/cdonohue/prezto-clean-prompt/blob/master/screenshots/zpreztorc-prompt.png)
 
 ## Color configuration
 #### Foreground: `#8686cb`
