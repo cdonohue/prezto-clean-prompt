@@ -3,6 +3,7 @@
 A two line prezto prompt that displays the current `nvm` `node` version and, when available, `git` information about the repo that you are currently working with.
 
 ![Clean prompt](https://github.com/cdonohue/prezto-clean-prompt/blob/master/screenshots/prompt.png)
+> Shown using Operator Mono with Sauce Code Pro Nerd Font for non-ASCII characters
 
 ## Features
 - NodeJS version
@@ -20,6 +21,10 @@ It looks best with a duotone color scheme. I've included an `iTerm` theme in the
 
 ## Installation
 1. Update your color theme. You can use the provided [iTerm color theme](https://github.com/cdonohue/prezto-clean-prompt/releases/download/1.0.0/Duotone.Dark.Space.itermcolors) or modify your terminal with the ANSI colors below
+
+1. Head over to https://github.com/ryanoasis/nerd-fonts and install your favorite nerd font (I use [Sauce Code Pro](https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/SourceCodePro/Medium/complete/Sauce%20Code%20Pro%20Medium%20Nerd%20Font%20Complete%20Mono.ttf))
+
+    > You need one of these to get the arrow separators, OS icons, and NodeJS logo
 
 2. Clone to your external prezto prompts
 ```shell
