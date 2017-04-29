@@ -20,7 +20,7 @@ It looks best with a duotone color scheme. I've included an `iTerm` theme in the
 - [Duotone iTerm color theme](https://github.com/cdonohue/prezto-clean-prompt/blob/master/Duotone%20Dark%20Space.itermcolors)
 
 ## Installation
-1. Update your color theme. You can use the provided [iTerm color theme](https://github.com/cdonohue/prezto-clean-prompt/releases/download/1.0.0/Duotone.Dark.Space.itermcolors) or modify your terminal with the ANSI colors below
+1. Update your color theme. You can use the provided [iTerm color theme](https://github.com/cdonohue/prezto-clean-prompt/releases/download/1.0.0/Duotone.Dark.Space.itermcolors) or modify your terminal with the ANSI colors [below](https://github.com/cdonohue/prezto-clean-prompt/blob/master/README.md#color-configuration)
 
 1. Head over to https://github.com/ryanoasis/nerd-fonts and install your favorite nerd font (I use [Sauce Code Pro](https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/SourceCodePro/Medium/complete/Sauce%20Code%20Pro%20Medium%20Nerd%20Font%20Complete%20Mono.ttf))
 
