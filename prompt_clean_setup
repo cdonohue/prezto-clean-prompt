@@ -18,7 +18,7 @@ _prompt_clean_start_time=$SECONDS
 
 # Define base prompt symbol by checking for os type
 case "$OSTYPE" in
-  darwin*)  _prompt_clean_base_prompt_symbol='' ;; 
+  darwin*)  _prompt_clean_base_prompt_symbol='' ;;
   linux*)   _prompt_clean_base_prompt_symbol='' ;;
   msys*)    _prompt_clean_base_prompt_symbol='' ;;
   cygwin*)  _prompt_clean_base_prompt_symbol='' ;;
@@ -50,7 +50,7 @@ function prompt_clean_end_segment {
 
 function prompt_clean_nvm {
   if [[ $(type nvm) =~ 'nvm is a shell function' ]]; then
-    prompt_clean_start_segment $1 $2 " $(nvm current)"
+    prompt_clean_start_segment $1 $2 " $(nvm current)"
   fi
 }
 
@@ -65,9 +65,9 @@ function prompt_clean_git_status {
 }
 
 function prompt_clean_build_prompt {
-  prompt_clean_start_segment black default '%(?::%F{red}✘ )%(!:%F{yellow}⚡ :)%(1j:%F{cyan}⚙ :)%F{white}${_prompt_clean_base_prompt_symbol}'
-  
-  prompt_clean_start_segment blue black '$_prompt_clean_pwd'
+  prompt_clean_start_segment 15 black '%(?::%F{red} )%(!:%F{yellow}⚡ :)%(1j:%F{cyan}⚙ :)%F{black}${_prompt_clean_base_prompt_symbol}'
+
+  prompt_clean_start_segment 12 black '$_prompt_clean_pwd'
 
   prompt_clean_nvm green white
 
@@ -85,7 +85,7 @@ function prompt_clean_pwd {
     _prompt_clean_pwd="$MATCH"
     unset MATCH
   else
-    _prompt_clean_pwd="${${${${(@j:/:M)${(@s:/:)pwd}##.#?}:h}%/}//\%/%%}/${${pwd:t}//\%/%%}"
+    _prompt_clean_pwd=" ${${${${(@j:/:M)${(@s:/:)pwd}##.#?}:h}%/}//\%/%%}/${${pwd:t}//\%/%%}"
   fi
 }
 
@@ -120,16 +120,16 @@ function prompt_clean_setup {
 
   # Set editor-info parameters.
   zstyle ':prezto:module:editor:info:completing' format '%B%F{red}...%f%b'
-  zstyle ':prezto:module:editor:info:keymap:primary' format '%B%F{blue}❯%f%b'
+  zstyle ':prezto:module:editor:info:keymap:primary' format '%B%F{blue}%f%b'
   zstyle ':prezto:module:editor:info:keymap:primary:overwrite' format '%F{red}♺%f'
   zstyle ':prezto:module:editor:info:keymap:alternate' format '%B%F{red}❮%f%b'
 
   # Set git-info parameters.
   zstyle ':prezto:module:git:info' verbose 'yes'
-  zstyle ':prezto:module:git:info:ahead' format '%F{blue}↑%F{white}%A'
-  zstyle ':prezto:module:git:info:behind' format '%F{blue}↓%F{white}%B'
+  zstyle ':prezto:module:git:info:ahead' format '%F{white}⇡'
+  zstyle ':prezto:module:git:info:behind' format '%F{white}⇣'
   zstyle ':prezto:module:git:info:branch' format '⑂ %b'
-  zstyle ':prezto:module:git:info:dirty' format '%F{blue}▵%F{white}%D'
+  zstyle ':prezto:module:git:info:dirty' format '%F{white}'
   zstyle ':prezto:module:git:info:keys' format \
     'ref' '$(coalesce "%b" "%p" "%c")' \
     'dirty' '%D' \
